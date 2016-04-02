@@ -45,38 +45,32 @@ var Login = React.createClass({
   render: function(){
     if(!this.state.toggleSignup){
       return (
-        <div className="container">
-          <div className="row">
-            <div className="col-xs-12 login-form">
-              <form onSubmit={this.login}>
-                <input type="text" placeholder="Username"
-                  valueLink={this.linkState('name') } />
-                <input type="password" placeholder="Password"
-                  valueLink={this.linkState('password') } />
-                <button type="submit">Submit</button>
-              </form>
-              <a href="#" onClick={this.toggleSignup}>Don't Have An Account? Create One Now!</a>
-            </div>
-          </div>
+        <div className="login-form">
+          <h1>InstaClone</h1>
+          <form onSubmit={this.login}>
+            <input type="text" placeholder="Username"
+              valueLink={this.linkState('name') } />
+            <input type="password" placeholder="Password"
+              valueLink={this.linkState('password') } />
+            <button className="btn btn-primary" type="submit">Submit</button>
+          </form>
+          <a className="screen-link" href="#" onClick={this.toggleSignup}>Don't Have An Account? Create One Now!</a>
         </div>
       );
     }else{
       return (
-        <div className="container">
-          <div className="row">
-            <div className="col-xs-12 login-form">
-              <form onSubmit={this.signUp}>
-                <input type="text" placeholder="Username"
-                  valueLink={this.linkState('name') } />
-                <input type="email" placeholder="Email Address"
-                  valueLink={this.linkState('email') } />
-                <input type="password" placeholder="Password"
-                  valueLink={this.linkState('password') } />
-                <button type="submit">Submit</button>
-              </form>
-              <a href="#" onClick={this.toggleSignup}>Already Have An Account? Sign In Here!</a>
-            </div>
-          </div>
+        <div className="login-form">
+          <h1>InstaClone</h1>
+          <form onSubmit={this.signUp}>
+            <input type="text" placeholder="Username"
+              valueLink={this.linkState('name') } />
+            <input type="email" placeholder="Email Address"
+              valueLink={this.linkState('email') } />
+            <input type="password" placeholder="Password"
+              valueLink={this.linkState('password') } />
+            <button className="btn btn-primary" type="submit">Submit</button>
+          </form>
+          <a className="screen-link" href="#" onClick={this.toggleSignup}>Already Have An Account? Sign In Here!</a>
         </div>
       );
     }

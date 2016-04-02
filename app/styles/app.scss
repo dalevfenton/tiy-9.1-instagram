@@ -15,3 +15,107 @@ $icon-font-path: '../../node_modules/bootstrap-sass/assets/fonts/bootstrap/';
 img {
   max-width: 100%;
 }
+
+body{
+  background: rgb(250, 250, 250);
+}
+
+.header-full-width{
+  width: 100%;
+  background: white;
+  border-bottom: 1px solid rgb(238, 238, 238);
+  padding: 16px 0;
+}
+
+.header-container, .body-container{
+  width: 80%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.header-item{
+  display: inline-block;
+  height: 40px;
+  vertical-align: middle;
+  &:not(:first-of-type){
+    margin-left: -4px;
+  }
+}
+.header-left{
+  width: 25%;
+}
+.header-center{
+  width: 50%;
+  text-align: center;
+  input{
+    line-height: 26px;
+  }
+}
+.header-right{
+  width: 25%;
+  text-align: right;
+}
+.brand{
+  font-size: 26px;
+  color: rgb(0, 86, 138);
+  font-family: 'Oleo Script', cursive;
+}
+.header-button{
+  color: rgb(0, 86, 138);
+  .glyphicon{
+    font-size: 20px;
+    margin-top: 10px;
+  }
+}
+.header-button a:before{
+  content: '',
+
+}
+
+.login-form{
+  width: 50%;
+  margin: 100px auto;
+  border: 1px solid rgb(238, 238, 238);
+  padding: 20px;
+  background: white;
+  h1{
+    text-align: center;
+    margin: 10px;
+    color: rgb(0, 86, 138);
+    font-family: 'Oleo Script', cursive;
+  }
+  input, button{
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+}
+.screen-link{
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+}
+
+.new-post-form{
+  width: 100%;
+  padding: 20px 10%;
+  input, textarea{
+    width: 100%;
+  }
+}
+#photo-input{
+  display: none;
+}
+.file-input-label, .post-form-image{
+  width: 100%;
+  background: white;
+  border: 1px solid rgb(238, 238, 238);
+  text-align: center;
+  width: 50%;
+  margin-left: 25%;
+  padding-top: 20%;
+  padding-bottom: 20%;
+  margin-bottom: 30px;
+  .glyphicon{
+    font-size: 40px;
+  }
+}

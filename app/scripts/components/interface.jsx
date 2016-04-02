@@ -2,6 +2,7 @@
 //3rd party libs
 var React = require('react');
 var Parse = require('parse');
+var Backbone = require('backbone');
 
 //setup parse SDK to connect to server
 Parse.initialize("dvf_instagram");
@@ -28,7 +29,6 @@ var Interface = React.createClass({
     this.props.router.off('route', this.callback);
   },
   login: function(parseUserObj){
-    console.log('inside interface login');
     this.setState({'user': parseUserObj});
   },
   logout: function(e){
@@ -42,10 +42,10 @@ var Interface = React.createClass({
       });
   },
   addPost: function(parsePostObj){
-    console.log('inside master addPost with', parsePostObj);
+    Backbone.history.navigate('posts/' + parsePostObj.id, {trigger: true});
   },
   render: function(){
-    console.log('main render called');
+    // console.log('main render called');
     var body;
     //if our user isn't set we need to display the login form
     if(!this.state.user){
@@ -54,8 +54,19 @@ var Interface = React.createClass({
     if(this.props.router.current == 'index'){
       body = (
         <div>
-          <h1>Index Page</h1>
-          <PostForm addPost={this.addPost}/>
+          <PostForm addPost={this.addPost} />
+        </div>
+      );
+    }else if(this.props.router.current == 'postList'){
+      body = (
+        <div>
+          <h1>List View For All Posts</h1>
+        </div>
+      );
+    }else if(this.props.router.current == 'postDetail'){
+      body = (
+        <div>
+          <h1>List View For A Single Post</h1>
         </div>
       );
     }else{
@@ -64,23 +75,22 @@ var Interface = React.createClass({
 
     return (
       <div>
-        <div className="container-fluid">
-          <div className="container">
-            <div className="row">
-              <div className="col-xs-12">
-                <span className="brand">InstaClone</span>
-                <button className="pull-right btn btn-secondary"
-                  onClick={this.logout}>Log Out</button>
-              </div>
+        <div className="header-full-width">
+          <div className="header-container">
+            <div className="header-item header-left">
+              <span className="brand">InstaClone</span>
+            </div>
+            <div className="header-item header-center">
+              <input type="text" placeholder="Search"/>
+            </div>
+            <div className="header-item header-right">
+              <a href="#" className="header-button"
+                onClick={this.logout}><span className="glyphicon glyphicon-user" aria-hidden="true"></span></a>
             </div>
           </div>
         </div>
-        <div className="container">
-          <div className="row">
-            <div className="col-xs-12">
-              {body}
-            </div>
-          </div>
+        <div className="body-container">
+          {body}
         </div>
       </div>
     )
