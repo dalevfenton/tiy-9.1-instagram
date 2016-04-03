@@ -90,7 +90,7 @@ var PostForm = React.createClass({
           {file}
           <textarea placeholder="add a description"
             valueLink={this.linkState('description') }></textarea>
-          <button type="submit">Submit</button>
+          <button className="btn btn-primary" type="submit">Submit</button>
         </form>
       </div>
     );

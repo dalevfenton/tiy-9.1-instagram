@@ -11,6 +11,7 @@ Parse.serverURL = 'http://instagram-c.herokuapp.com';
 //import child React components
 var Login = require('./login.jsx');
 var PostForm = require('./postform.jsx');
+var PostDetail = require('./postdetail.jsx');
 
 //define the top level component
 var Interface = React.createClass({
@@ -65,9 +66,7 @@ var Interface = React.createClass({
       );
     }else if(this.props.router.current == 'postDetail'){
       body = (
-        <div>
-          <h1>List View For A Single Post</h1>
-        </div>
+        <PostDetail id={this.props.router.currentPostId} />
       );
     }else{
       body = (<div><h1>Page Not Found</h1></div>);

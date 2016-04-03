@@ -45,7 +45,7 @@ var Login = React.createClass({
   render: function(){
     if(!this.state.toggleSignup){
       return (
-        <div className="login-form">
+        <div className="login-form clone-form">
           <h1>InstaClone</h1>
           <form onSubmit={this.login}>
             <input type="text" placeholder="Username"
@@ -59,7 +59,7 @@ var Login = React.createClass({
       );
     }else{
       return (
-        <div className="login-form">
+        <div className="login-form clone-form">
           <h1>InstaClone</h1>
           <form onSubmit={this.signUp}>
             <input type="text" placeholder="Username"
