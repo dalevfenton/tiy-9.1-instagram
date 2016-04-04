@@ -11,7 +11,6 @@ var CommentForm = React.createClass({
   },
   handleSubmit: function(e){
     e.preventDefault();
-    console.log(this.props);
     this.props.submit(this.state.comment);
     this.setState({comment: ''});
   },

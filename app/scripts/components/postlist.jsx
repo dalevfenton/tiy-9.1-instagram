@@ -12,7 +12,7 @@ var PostList = React.createClass({
   componentWillMount: function(){
     var query = new Parse.Query( Parse.Object.extend("Post") );
     query.find().then(function(posts){
-      console.log(posts);
+      // console.log(posts);
       this.setState({'posts': posts});
     }.bind(this), function(error){
       console.log('error getting posts', error);
@@ -21,7 +21,6 @@ var PostList = React.createClass({
   render: function(){
     if(this.state.posts){
       var posts = this.state.posts.map(function(post){
-        console.log(post);
         return (
           <div className="post-gallery-detail" key={post.id}>
             <a href={"#posts/"+post.id}>

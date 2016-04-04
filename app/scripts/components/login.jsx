@@ -20,7 +20,6 @@ var Login = React.createClass({
     e.preventDefault();
     Parse.User.logIn(this.state.name, this.state.password).then(
       function(user){
-        console.log('user signed in');
         this.props.login(user);
       }.bind(this),function(error, code, info){
         console.log('user login failed');

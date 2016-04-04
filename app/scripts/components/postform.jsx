@@ -22,7 +22,6 @@ var PostForm = React.createClass({
     var name = Parse.User.current().id + Date.now() + ".jpg";
     var file = new Parse.File(name, e.target.files[0]);
     file.save().then(function(file){
-      console.log('file returned');
       this.setState({file: file});
     }.bind(this)
     , function(error){
@@ -56,15 +55,14 @@ var PostForm = React.createClass({
     post.setACL(acl);
 
     post.save().then(function(postObj){
-      console.log('post uploaded successfully');
-      console.log(postObj);
+      // console.log('post uploaded successfully');
+      // console.log(postObj);
       this.props.addPost(postObj);
     }.bind(this), function(error){
       console.log('error uploading post', error);
     });
   },
   render: function(){
-    console.log('rendering new post form');
     var file;
     if(this.state.file){
       file = (<div className="post-form-image"><img src={this.state.file.url()} /></div>);

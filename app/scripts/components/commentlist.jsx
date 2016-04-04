@@ -5,12 +5,10 @@ var UserDetail = require('./userdetail.jsx');
 
 var CommentList = React.createClass({
   render: function(){
-    console.log(this.props.comments);
+    // console.log(this.props.comments);
     var comments = this.props.comments.map(function(comment){
-      console.log(comment);
       //use moment.js to set a date string for the age of the post
       var created = moment(comment.get('createdAt')).fromNow();
-      console.log(created);
       return (
         <div className="comment-detail" key={comment.id}>
           <UserDetail user={comment.get('user')} />

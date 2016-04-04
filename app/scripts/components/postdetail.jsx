@@ -70,7 +70,6 @@ var PostDetail = React.createClass({
     });
   },
   render: function(){
-    console.log(['hello', this.state.post]);
     if(this.state.post){
       //use moment.js to set a date string for the age of the post
       var created = moment(this.state.post.get('createdAt')).fromNow();
@@ -81,7 +80,6 @@ var PostDetail = React.createClass({
       }else{
         comments = [];
       }
-      console.log('comments', comments);
       return (
         <div className="post-detail-view">
           <UserDetail user={this.state.post.get('user')}/>
