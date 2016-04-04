@@ -19,7 +19,6 @@ var PostDetail = React.createClass({
   componentWillMount: function(){
     var savePost, saveComments;
     var self = this;
-    var post = new Parse.Object.extend("Post");
     var query = new Parse.Query( Parse.Object.extend("Post") );
     // query.include('file');
     query.include('user');
@@ -63,6 +62,8 @@ var PostDetail = React.createClass({
     commentObj.set("comment", comment);
     commentObj.save().then(function(savedComment){
       comments.push(commentObj);
+      this.state.post.set('comments', comments);
+      this.state.post.save();
       this.setState({'comments': comments});
     }.bind(this), function(error){
       console.log('error saving comment', error);

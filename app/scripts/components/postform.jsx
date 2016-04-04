@@ -64,6 +64,7 @@ var PostForm = React.createClass({
     });
   },
   render: function(){
+    console.log('rendering new post form');
     var file;
     if(this.state.file){
       file = (<div className="post-form-image"><img src={this.state.file.url()} /></div>);

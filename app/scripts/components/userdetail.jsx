@@ -15,14 +15,15 @@ var UserDetail = React.createClass({
       <div className="post-detail-header">
         <div className="post-detail-header-left">
           {avatar}
-          <span className="user-name">@{this.props.user.get('username')}</span>
+          <span className="user-name"><a href={"#users/"+this.props.user.id}>@{this.props.user.get('username')}</a></span>
         </div>
         <div className="post-detail-header-right">
-          <button className="follow-button">FOLLOW</button>
+
         </div>
       </div>
     );
   }
 });
-
+//follow button belongs in post-detail-header-right but is not implemented
+// <button className="follow-button">FOLLOW</button>
 module.exports = UserDetail;

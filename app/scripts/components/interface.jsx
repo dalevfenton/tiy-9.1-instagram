@@ -12,6 +12,7 @@ Parse.serverURL = 'http://instagram-c.herokuapp.com';
 var Login = require('./login.jsx');
 var PostForm = require('./postform.jsx');
 var PostDetail = require('./postdetail.jsx');
+var PostList = require('./postlist.jsx');
 
 //define the top level component
 var Interface = React.createClass({
@@ -46,7 +47,6 @@ var Interface = React.createClass({
     Backbone.history.navigate('posts/' + parsePostObj.id, {trigger: true});
   },
   render: function(){
-    // console.log('main render called');
     var body;
     //if our user isn't set we need to display the login form
     if(!this.state.user){
@@ -55,18 +55,40 @@ var Interface = React.createClass({
     if(this.props.router.current == 'index'){
       body = (
         <div>
-          <PostForm addPost={this.addPost} />
+          <PostList />
         </div>
       );
     }else if(this.props.router.current == 'postList'){
       body = (
         <div>
-          <h1>List View For All Posts</h1>
+          <PostList />
         </div>
       );
     }else if(this.props.router.current == 'postDetail'){
       body = (
         <PostDetail id={this.props.router.currentPostId} />
+      );
+    }else if(this.props.router.current == 'newPost'){
+      body = (
+        <div>
+          <PostForm addPost={this.addPost} />
+        </div>
+      );
+    }else if(this.props.router.current == 'userList'){
+      body = (
+        <div>
+          <h1>List View For Users</h1>
+          <p>(would probably be a page seeded
+              with people expected to be of interest to you)</p>
+        </div>
+      );
+    }else if(this.props.router.current == 'userDetail'){
+      body = (
+        <div>
+          <h1>Detail View For A User</h1>
+          <p>Public Profile View For A Given User Showing Their
+          Posts, Follows and Other Info</p>
+        </div>
       );
     }else{
       body = (<div><h1>Page Not Found</h1></div>);
@@ -77,7 +99,7 @@ var Interface = React.createClass({
         <div className="header-full-width">
           <div className="header-container">
             <div className="header-item header-left">
-              <span className="brand">InstaClone</span>
+              <span className="brand"><a href="#">InstaClone</a></span>
             </div>
             <div className="header-item header-center">
               <input type="text" placeholder="Search"/>
