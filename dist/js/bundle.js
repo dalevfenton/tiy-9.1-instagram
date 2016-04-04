@@ -13,7 +13,6 @@ var CommentForm = React.createClass({displayName: "CommentForm",
   },
   handleSubmit: function(e){
     e.preventDefault();
-    console.log(this.props);
     this.props.submit(this.state.comment);
     this.setState({comment: ''});
   },
@@ -42,12 +41,10 @@ var UserDetail = require('./userdetail.jsx');
 
 var CommentList = React.createClass({displayName: "CommentList",
   render: function(){
-    console.log(this.props.comments);
+    // console.log(this.props.comments);
     var comments = this.props.comments.map(function(comment){
-      console.log(comment);
       //use moment.js to set a date string for the age of the post
       var created = moment(comment.get('createdAt')).fromNow();
-      console.log(created);
       return (
         React.createElement("div", {className: "comment-detail", key: comment.id}, 
           React.createElement(UserDetail, {user: comment.get('user')}), 
@@ -234,7 +231,6 @@ var Login = React.createClass({displayName: "Login",
     e.preventDefault();
     Parse.User.logIn(this.state.name, this.state.password).then(
       function(user){
-        console.log('user signed in');
         this.props.login(user);
       }.bind(this),function(error, code, info){
         console.log('user login failed');
@@ -368,7 +364,6 @@ var PostDetail = React.createClass({displayName: "PostDetail",
     });
   },
   render: function(){
-    console.log(['hello', this.state.post]);
     if(this.state.post){
       //use moment.js to set a date string for the age of the post
       var created = moment(this.state.post.get('createdAt')).fromNow();
@@ -379,7 +374,6 @@ var PostDetail = React.createClass({displayName: "PostDetail",
       }else{
         comments = [];
       }
-      console.log('comments', comments);
       return (
         React.createElement("div", {className: "post-detail-view"}, 
           React.createElement(UserDetail, {user: this.state.post.get('user')}), 
@@ -439,7 +433,6 @@ var PostForm = React.createClass({displayName: "PostForm",
     var name = Parse.User.current().id + Date.now() + ".jpg";
     var file = new Parse.File(name, e.target.files[0]);
     file.save().then(function(file){
-      console.log('file returned');
       this.setState({file: file});
     }.bind(this)
     , function(error){
@@ -473,15 +466,14 @@ var PostForm = React.createClass({displayName: "PostForm",
     post.setACL(acl);
 
     post.save().then(function(postObj){
-      console.log('post uploaded successfully');
-      console.log(postObj);
+      // console.log('post uploaded successfully');
+      // console.log(postObj);
       this.props.addPost(postObj);
     }.bind(this), function(error){
       console.log('error uploading post', error);
     });
   },
   render: function(){
-    console.log('rendering new post form');
     var file;
     if(this.state.file){
       file = (React.createElement("div", {className: "post-form-image"}, React.createElement("img", {src: this.state.file.url()})));
@@ -533,7 +525,7 @@ var PostList = React.createClass({displayName: "PostList",
   componentWillMount: function(){
     var query = new Parse.Query( Parse.Object.extend("Post") );
     query.find().then(function(posts){
-      console.log(posts);
+      // console.log(posts);
       this.setState({'posts': posts});
     }.bind(this), function(error){
       console.log('error getting posts', error);
@@ -542,7 +534,6 @@ var PostList = React.createClass({displayName: "PostList",
   render: function(){
     if(this.state.posts){
       var posts = this.state.posts.map(function(post){
-        console.log(post);
         return (
           React.createElement("div", {className: "post-gallery-detail", key: post.id}, 
             React.createElement("a", {href: "#posts/"+post.id}, 
