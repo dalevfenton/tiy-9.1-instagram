@@ -204,3 +204,18 @@ body{
 .post-description{
   padding: 10px 0;
 }
+.comment-form{
+  padding: 10px 0;
+  input{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid rgb(200,200,200);
+  }
+  button{
+    display: none;
+  }
+}
+.comment-comment{
+  padding: 10px 0;
+  font-weight: bold;
+}

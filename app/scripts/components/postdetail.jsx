@@ -5,43 +5,65 @@ var moment = require('moment');
 var Loading = require('./loading.jsx');
 var CommentForm = require('./commentform.jsx');
 var CommentList = require('./commentlist.jsx');
+var UserDetail = require('./userdetail.jsx');
 
 var Glyphicon = require('react-bootstrap').Glyphicon;
 
 var PostDetail = React.createClass({
   getInitialState: function(){
     return {
-      post: null
+      post: null,
+      comments: null
     }
   },
   componentWillMount: function(){
+    var savePost, saveComments;
+    var self = this;
     var post = new Parse.Object.extend("Post");
     var query = new Parse.Query( Parse.Object.extend("Post") );
     // query.include('file');
     query.include('user');
-    query.get(this.props.id).then(function(postObj){
-      console.log('post returned', postObj);
-      this.setState({post: postObj});
-    }.bind(this), function(error){
-      console.log('error getting post', error);
+    query.get(self.props.id).then(function(postObj){
+      // console.log('post returned', postObj);
+      savePost = postObj;
+      var query = new Parse.Query( Parse.Object.extend("Comment") );
+      query.equalTo("post", postObj );
+      query.find().then(function(comments){
+        self.setState({
+          "post": savePost,
+          "comments": comments
+        });
+      }, function(error){
+        console.log('error getting post and comments', error);
+      });
     });
   },
   addComment: function(comment){
+    if(!Parse.User.current()){
+      return {error: 'no user is logged in'};
+    }
     var comments;
-    if(this.state.post.get('comments')){
-      comments = this.state.post.get('comments');
+    //set current comments or a blank array if none exist
+    if(this.state.comments){
+      comments = this.state.comments;
     }else{
       comments = [];
     }
+    //initialize a new comment
     var Comment = Parse.Object.extend("Comment");
-    var commentObj = new Comment(comment);
+    var commentObj = new Comment();
+    //set access control
+    var acl = new Parse.ACL();
+    acl.setPublicReadAccess(true);
+    acl.setWriteAccess(Parse.User.current().id, true);
+    commentObj.setACL(acl);
+    //set comment properties
     commentObj.set("user", Parse.User.current());
     commentObj.set("post", this.state.post);
+    commentObj.set("comment", comment);
     commentObj.save().then(function(savedComment){
-      console.log(savedComment);
       comments.push(commentObj);
-      this.state.post.set("comments", comments);
-      this.setState({'post': this.state.post});
+      this.setState({'comments': comments});
     }.bind(this), function(error){
       console.log('error saving comment', error);
     });
@@ -49,33 +71,19 @@ var PostDetail = React.createClass({
   render: function(){
     console.log(['hello', this.state.post]);
     if(this.state.post){
-      //set the user's avatar
-      var avatar;
-      if(this.state.post.get('user').get('avatar')){
-        avatar = ( <img className="user-avatar" src={this.state.post.get('user').get('avatar').url() } /> );
-      }else{
-        avatar = ( <span className="user-avatar user-avatar-icon"><Glyphicon glyph="user" /></span>)
-      }
       //use moment.js to set a date string for the age of the post
       var created = moment(this.state.post.get('createdAt')).fromNow();
       //setup the comments variable to pass into comments List
       var comments;
-      if(this.state.post.get('comments')){
-        comments = this.state.post.get('comments');
+      if(this.state.comments){
+        comments = this.state.comments;
       }else{
         comments = [];
       }
+      console.log('comments', comments);
       return (
         <div className="post-detail-view">
-          <div className="post-detail-header">
-            <div className="post-detail-header-left">
-              {avatar}
-              <span className="user-name">@{this.state.post.get('user').get('username')}</span>
-            </div>
-            <div className="post-detail-header-right">
-              <button className="follow-button">FOLLOW</button>
-            </div>
-          </div>
+          <UserDetail user={this.state.post.get('user')}/>
           <div className="post-detail-header">
             <div className="post-detail-header-left">
               <span className="post-likes">{"11 likes"}</span>
