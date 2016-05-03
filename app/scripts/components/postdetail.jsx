@@ -22,6 +22,8 @@ var PostDetail = React.createClass({
     var query = new Parse.Query( Parse.Object.extend("Post") );
     // query.include('file');
     query.include('user');
+    // should be able to do this to get comments automatically
+    // query.include('comments');
     query.get(self.props.id).then(function(postObj){
       // console.log('post returned', postObj);
       savePost = postObj;
